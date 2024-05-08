@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guess App</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 10px auto;
+        }
+        body{
+            background-color: #4fc8f7;
+        }
+        h1{
+            margin-bottom: 20px;
+            color: #008000;
+            font-size: 40px;
+            font-weight: 900;
+        }
+        p{
+            color: #0000ff;
+            font-size: xx-large;
+            font-weight: 900;
+        }
+        .box{
+            margin-top: 20px;
+        }
+        #inputField{
+            padding: 10px 20px;
+            width: fit-content;
+            border-radius: 5px;
+            font-size: x-large;
+            font-weight: 500;
+        }
+        .bt{
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: x-large;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .bt:hover{
+            background-color: #4ee24e;
+        }
+        #res{
+            margin-top: 20px;
+            font-size: x-large;
+            font-weight: 900;
+            color: #8a2be2;
+        }
+        #guess{
+            color: #e20e95;
+        }
+        #reStartBtn{
+            margin: 10px auto;
+            background-color: #ffff00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Number Guessing App</h1>
+        <p>Please Guess A Number Between 1 To 100</p>
+        <p id="guess"></p>
+        <div class="box">
+            <input type="number" placeholder="Guess" id="inputField" class="boxer">
+            <button id="btn" type="submit" class="boxer bt">Submit</button>
+            <button id="reStartBtn" style="display: none;" class="bt">ReStart</button>
+        </div>
+        <div id="res"></div>
+    </div>
+
+   <script>
+
+        let btn = document.getElementById('btn');
+        let res = document.getElementById('res');
+        let guess = document.getElementById('guess');
+        let reStartBtn = document.getElementById('reStartBtn');
+
+        let chance = 10;
+        res.innerText = `You Have ${chance} Choice`;
+
+        btn.addEventListener('click',()=>{
+            if(chance <= 10 && chance > 0){
+                res.innerText = `You Have ${chance} Choice`;
+                chance--;
+                let randomNumber = parseInt((Math.random() * 100) + 1);
+                let inputField = document.getElementById('inputField').value;
+                console.log(randomNumber);
+                if(inputField >= 100 || inputField <= 0){
+                    guess.innerText = "Please Enter Value 1-100";
+                    chance++;
+                }
+                else if(randomNumber == inputField){
+                    res.innerText = `Your Guess is Correct`
+                    res.style.color = "green";
+                    guess.innerText = `Your Guess is Correct`
+                    guess.style.color = "green";
+                    reStartBtn.style.display = "block";
+                    btn.disabled = true;
+                }
+                else if(inputField > randomNumber){
+                    guess.innerText = "Youe Guess Value is High"
+                }else if(inputField < randomNumber){
+                    guess.innerText = "Youe Guess Value is Low"
+                }
+                
+            }else if(chance ==  0){
+                res.innerText = `You Have Finish This Game And You Have No Choice`
+                res.style.color = "red";
+                reStartBtn.style.display = "block";
+                btn.disabled = true;
+            }
+        })
+
+        reStartBtn.addEventListener('click',()=>{
+            reStartGame();
+            reStartBtn.style.display = "none";
+            btn.disabled = false;
+        })
+
+        function reStartGame(){
+            chance = 10;
+            res.innerText = `You Have ${chance} Choice`;
+            res.style.color = "#8a2be2";
+            guess.innerText = '';
+            document.getElementById('inputField').value = '';
+        }
+
+   </script>
+</body>
+</html>
